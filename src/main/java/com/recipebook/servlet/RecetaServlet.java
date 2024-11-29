@@ -1,13 +1,9 @@
 package com.recipebook.servlet;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.recipebook.Main;
-import com.recipebook.Test;
-import com.recipebook.logic.Paso;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 
