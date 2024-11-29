@@ -75,7 +75,7 @@ public class RecetaServlet extends HttpServlet {
                 response.sendRedirect("recetas/postre.jsp");
             }
             case BEBIDA -> {
-                response.sendRedirect("recetas/bebida.jsp");
+                response.sendRedirect("./recetas/bebida.jsp");
             }
             case ENSALADA -> {
                 response.sendRedirect("recetas/ensalada.jsp");
