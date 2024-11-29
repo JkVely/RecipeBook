@@ -128,4 +128,8 @@ public class Receta {
         }
         this.valor = valor_ / valoracion.size();
     }
+
+    public List<Paso> getPasos(){
+        return pasos;
+    }
 }

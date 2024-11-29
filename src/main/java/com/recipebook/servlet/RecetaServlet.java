@@ -1,8 +1,12 @@
 package com.recipebook.servlet;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.google.gson.Gson;
+import com.recipebook.Main;
+import com.recipebook.Test;
 import com.recipebook.logic.Paso;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
@@ -46,11 +50,25 @@ public class RecetaServlet extends HttpServlet {
 
         String utensiliosJson = request.getParameter("utensilios");
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
+        
+        Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
 
         String pasosJson = request.getParameter("pasos");
-        //Paso[] pasos = new Gson().fromJson(pasosJson, Paso[].class);
+        Map[] mapPasos = new Gson().fromJson(pasosJson, Map[].class);
+        for (Map p : mapPasos){
+            String descripcionPaso = (String) p.get("descripcion");
+            String tiempoStr = (String) p.get("tiempo");
+            int tiempo = Integer.parseInt(tiempoStr);
+            String imagenPaso = (String) p.get("imagen");
+            String utensiliosPasoJson = new Gson().toJson(p.get("utensilios"));
+            String utensiliosPasoStr = new Gson().fromJson(utensiliosPasoJson, String.class);
+            String[] utensiliosPaso = utensiliosPasoStr.split(",");
+            String ingredientesPasoJson = new Gson().toJson(p.get("ingredientes"));
+            String ingredientesPasoStr = new Gson().fromJson(ingredientesPasoJson, String.class);
+            String[] ingredientesPaso = ingredientesPasoStr.split(",");
+            receta.addStep(descripcionPaso, tiempo, utensiliosPaso, ingredientesPaso, imagenPaso);
+        }
 
-        Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
         for (String ingrediente : ingredientes) {
             receta.addIngrediente(ingrediente);
         }
@@ -60,6 +78,7 @@ public class RecetaServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);
+        session.setAttribute("pasos", receta.getPasos());
 
         switch (receta.getTipo()) {
             case ALMUERZO -> {
@@ -88,77 +107,6 @@ public class RecetaServlet extends HttpServlet {
             }
             default -> throw new AssertionError();
         }
-        /*
-         * // Obtener datos del formulario
-         * String nombre = request.getParameter("nombre");
-         * String apellido = request.getParameter("apellido");
-         * String email = request.getParameter("email");
-         * String telefono = request.getParameter("telefono");
-         * String direccion = request.getParameter("direccion");
-         * String fechaNacimiento = request.getParameter("fechaNacimiento");
-         * Part filePart = request.getPart("foto");
-         * 
-         * // Obtener el nombre del archivo (con extensión)
-         * String fileName =
-         * Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-         * 
-         * // Definir el path donde se subirá la foto
-         * String uploadPath = getServletContext().getRealPath("") + "Uploads";
-         * 
-         * // Crear el directorio si no existe
-         * File uploadsDir = new File(uploadPath);
-         * if (!uploadsDir.exists()) {
-         * uploadsDir.mkdir(); // Puedes usar mkdirs() si deseas crear también los
-         * directorios padre si no existen
-         * }
-         * 
-         * // Definir la ruta completa del archivo donde se guardará
-         * String filePath = uploadPath + File.separator + fileName;
-         * 
-         * // Escribir el archivo en el disco
-         * filePart.write(filePath);
-         * 
-         * // Aquí puedes hacer alguna acción adicional, como guardar la ruta del
-         * archivo en la base de datos o en sesión.
-         * System.out.println("Archivo guardado en: " + filePath);
-         * 
-         * // Create InformacionPersonal object with the uploaded file path
-         * InformacionPersonal infoPer = new InformacionPersonal(nombre, apellido,
-         * email, telefono, direccion, fechaNacimiento,fileName);
-         * 
-         * 
-         * String tipoEducacion = request.getParameter("tipoEducacion");
-         * String institucion = request.getParameter("institucion");
-         * String carrera = request.getParameter("carrera");
-         * String anio = request.getParameter("anio");
-         * 
-         * Educacion educacion = new Educacion(tipoEducacion, institucion, carrera,
-         * anio);
-         * 
-         * String nivelIngles = (request.getParameter("nivel"));
-         * System.out.println(nivelIngles);
-         * 
-         * String empresa = request.getParameter("empresa");
-         * String cargo = request.getParameter("cargo");
-         * String anioComienzo = request.getParameter("anioComienzo");
-         * String anioFin = request.getParameter("anioFin");
-         * String descripcion = request.getParameter("descripcion");
-         * 
-         * ExperienciaLaboral experiencia = new ExperienciaLaboral(empresa, cargo,
-         * anioComienzo, anioFin, descripcion);
-         * 
-         * HojaDeVida hojaDeVida = new HojaDeVida(infoPer, educacion, experiencia ,
-         * nivelIngles);
-         * 
-         * // Obtener la sesión del usuario
-         * HttpSession session = request.getSession();
-         * 
-         * // Guardar el objeto HojaDeVida en la sesión
-         * session.setAttribute("hojaDeVida", hojaDeVida);
-         * 
-         * // Redirigir a otra página donde mostrarás la información de la Hoja de Vida
-         * response.sendRedirect("Hoja.jsp");
-         */
 
     }
 
@@ -201,5 +149,5 @@ public class RecetaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
+    
 }

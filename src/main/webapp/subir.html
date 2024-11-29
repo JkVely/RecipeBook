@@ -89,6 +89,7 @@
 
         function agregarPaso() {
             const pasoNum = pasos.length + 1;
+            const paso = [];
             const pasoHTML = `
                 <div class="paso" id="paso-${pasoNum}">
                     <h4>Paso ${pasoNum} <button type="button" class="delete-btn" onclick="borrarPaso(${pasoNum})">Borrar</button></h4>
