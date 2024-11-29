@@ -80,34 +80,7 @@ public class RecetaServlet extends HttpServlet {
         session.setAttribute("receta", receta);
         session.setAttribute("pasos", receta.getPasos());
 
-        switch (receta.getTipo()) {
-            case ALMUERZO -> {
-                response.sendRedirect("recetas/almuerzo.jsp");
-            }
-            case DESAYUNO -> {
-                response.sendRedirect("recetas/desayuno.jsp");
-            }
-            case CENA -> {
-                response.sendRedirect("recetas/cena.jsp");
-            }
-            case POSTRE -> {
-                response.sendRedirect("recetas/postre.jsp");
-            }
-            case BEBIDA -> {
-                response.sendRedirect("./recetas/bebida.jsp");
-            }
-            case ENSALADA -> {
-                response.sendRedirect("recetas/ensalada.jsp");
-            }
-            case GUARNICION -> {
-                response.sendRedirect("recetas/guarnicion.jsp");
-            }
-            case SNACK -> {
-                response.sendRedirect("recetas/snack.jsp");
-            }
-            default -> throw new AssertionError();
-        }
-
+        response.sendRedirect("./recetas/receta.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
