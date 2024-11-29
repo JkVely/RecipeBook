@@ -1,7 +1,12 @@
 package com.recipebook.servlet;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
+import com.google.gson.Gson;
+import com.recipebook.logic.Paso;
+import com.recipebook.logic.Receta;
+import com.recipebook.logic.RecipeTypes;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -9,15 +14,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import com.recipebook.logic.*;
-import java.util.Optional;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
-
 /**
  * 
  * @author Juan Quintero
  * @author Giovanni
+ * @author David
  * @version 1.0
  * @since 2023-10-01
  */
