@@ -48,7 +48,7 @@ public class RecetaServlet extends HttpServlet {
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
 
         String pasosJson = request.getParameter("pasos");
-        Paso[] pasos = new Gson().fromJson(pasosJson, Paso[].class);
+        //Paso[] pasos = new Gson().fromJson(pasosJson, Paso[].class);
 
         Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
         for (String ingrediente : ingredientes) {
@@ -57,38 +57,34 @@ public class RecetaServlet extends HttpServlet {
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
         }
-        for (Paso paso : pasos) {
-            receta.addStep(paso.getDescripcion(), paso.getTiempo(), paso.getUtensilios(), paso.getIngredientes(),
-                    paso.getImagen());
-        }
 
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);
 
         switch (receta.getTipo()) {
             case ALMUERZO -> {
-                response.sendRedirect("almuerzo.jsp");
+                response.sendRedirect("recetas/almuerzo.jsp");
             }
             case DESAYUNO -> {
-                response.sendRedirect("desayuno.jsp");
+                response.sendRedirect("recetas/desayuno.jsp");
             }
             case CENA -> {
-                response.sendRedirect("cena.jsp");
+                response.sendRedirect("recetas/cena.jsp");
             }
             case POSTRE -> {
-                response.sendRedirect("postre.jsp");
+                response.sendRedirect("recetas/postre.jsp");
             }
             case BEBIDA -> {
-                response.sendRedirect("bebida.jsp");
+                response.sendRedirect("recetas/bebida.jsp");
             }
             case ENSALADA -> {
-                response.sendRedirect("ensalada.jsp");
+                response.sendRedirect("recetas/ensalada.jsp");
             }
             case GUARNICION -> {
-                response.sendRedirect("guarnicion.jsp");
+                response.sendRedirect("recetas/guarnicion.jsp");
             }
             case SNACK -> {
-                response.sendRedirect("snack.jsp");
+                response.sendRedirect("recetas/snack.jsp");
             }
             default -> throw new AssertionError();
         }
