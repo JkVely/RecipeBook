@@ -24,7 +24,7 @@ import com.recipebook.logic.RecipeTypes;
  */
 public class RecetaDAO {
 
-    private static final String DB_URL = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433;databaseName=RecipeBook";
+    private static final String DB_URL = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433";
     private static final String USER = "admin";
     private static final String PASS = "JkVely1029";
 
@@ -36,6 +36,7 @@ public class RecetaDAO {
     public void addReceta(Receta receta) throws SQLException {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
             String sqlReceta = "INSERT INTO Recetas (Nombre, Descripcion, Tipo, Imagen, Tiempo, Valor) VALUES (?, ?, ?, ?, ?, ?)";
+            System.out.println("Conexión exitosa");
             try (PreparedStatement stmtReceta = conn.prepareStatement(sqlReceta,
                     PreparedStatement.RETURN_GENERATED_KEYS)) {
                 stmtReceta.setString(1, receta.getNombre());
