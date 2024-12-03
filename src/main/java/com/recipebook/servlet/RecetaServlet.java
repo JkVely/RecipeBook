@@ -1,9 +1,11 @@
 package com.recipebook.servlet;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Map;
 
 import com.google.gson.Gson;
+import com.recipebook.dao.RecetaDAO;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 
@@ -33,9 +35,11 @@ public class RecetaServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
+     * @throws SQLException 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        RecetaDAO recetaDAO = new RecetaDAO();
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
         String imagen = request.getParameter("imagen");
@@ -73,6 +77,12 @@ public class RecetaServlet extends HttpServlet {
         }
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
+        }
+
+        try {
+            recetaDAO.addReceta(receta);
+        } catch (SQLException e) {
+            System.out.println("Error al agregar receta");
         }
 
         HttpSession session = request.getSession();

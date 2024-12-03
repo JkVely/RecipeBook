@@ -12,15 +12,29 @@ import com.recipebook.logic.Paso;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 
+/**
+ * RecetaDAO (Data Access Object) es una clase que se encarga de manejar la
+ * persistencia de las recetas en la base de datos.
+ * Proporciona métodos para agregar, borrar y obtener información de las
+ * recetas.
+ * 
+ * @see com.recipebook.logic.Receta
+ * @see com.recipebook.logic.Paso
+ * @see com.recipebook.logic.RecipeTypes
+ */
 public class RecetaDAO {
 
     private static final String DB_URL = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433;databaseName=RecipeBook";
     private static final String USER = "admin";
     private static final String PASS = "JkVely1029";
 
+    /**
+     * Agrega una nueva receta a la base de datos.
+     * 
+     * @param receta La receta a agregar.
+     */
     public void addReceta(Receta receta) throws SQLException {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            // Insertar la receta
             String sqlReceta = "INSERT INTO Recetas (Nombre, Descripcion, Tipo, Imagen, Tiempo, Valor) VALUES (?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmtReceta = conn.prepareStatement(sqlReceta,
                     PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -32,12 +46,10 @@ public class RecetaDAO {
                 stmtReceta.setDouble(6, receta.getValor());
                 stmtReceta.executeUpdate();
 
-                // Obtener el ID de la receta insertada
                 try (ResultSet rs = stmtReceta.getGeneratedKeys()) {
                     if (rs.next()) {
                         int recetaId = rs.getInt(1);
 
-                        // Insertar los pasos
                         String sqlPaso = "INSERT INTO Pasos (RecetaID, Descripcion, Tiempo, Imagen) VALUES (?, ?, ?, ?)";
                         try (PreparedStatement stmtPaso = conn.prepareStatement(sqlPaso)) {
                             for (Paso paso : receta.getPasos()) {
@@ -49,7 +61,6 @@ public class RecetaDAO {
                             }
                         }
 
-                        // Insertar los ingredientes
                         String sqlIngrediente = "INSERT INTO Ingredientes (RecetaID, Nombre) VALUES (?, ?)";
                         try (PreparedStatement stmtIngrediente = conn.prepareStatement(sqlIngrediente)) {
                             for (String ingrediente : receta.getIngredientes()) {
@@ -59,7 +70,6 @@ public class RecetaDAO {
                             }
                         }
 
-                        // Insertar los utensilios
                         String sqlUtensilio = "INSERT INTO Utensilios (RecetaID, Nombre) VALUES (?, ?)";
                         try (PreparedStatement stmtUtensilio = conn.prepareStatement(sqlUtensilio)) {
                             for (String utensilio : receta.getUtensilios()) {
@@ -71,45 +81,57 @@ public class RecetaDAO {
                     }
                 }
             }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
+    /**
+     * Borra una receta de la base de datos.
+     * 
+     * @param recetaId El ID de la receta a borrar.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
     public void deleteReceta(int recetaId) throws SQLException {
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            // Borrar los pasos
             String sqlPaso = "DELETE FROM Pasos WHERE RecetaID = ?";
             try (PreparedStatement stmtPaso = conn.prepareStatement(sqlPaso)) {
                 stmtPaso.setInt(1, recetaId);
                 stmtPaso.executeUpdate();
             }
 
-            // Borrar los ingredientes
             String sqlIngrediente = "DELETE FROM Ingredientes WHERE RecetaID = ?";
             try (PreparedStatement stmtIngrediente = conn.prepareStatement(sqlIngrediente)) {
                 stmtIngrediente.setInt(1, recetaId);
                 stmtIngrediente.executeUpdate();
             }
 
-            // Borrar los utensilios
             String sqlUtensilio = "DELETE FROM Utensilios WHERE RecetaID = ?";
             try (PreparedStatement stmtUtensilio = conn.prepareStatement(sqlUtensilio)) {
                 stmtUtensilio.setInt(1, recetaId);
                 stmtUtensilio.executeUpdate();
             }
 
-            // Borrar la receta
             String sqlReceta = "DELETE FROM Recetas WHERE RecetaID = ?";
             try (PreparedStatement stmtReceta = conn.prepareStatement(sqlReceta)) {
                 stmtReceta.setInt(1, recetaId);
                 stmtReceta.executeUpdate();
             }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
+    /**
+     * Obtiene la información de una receta específica de la base de datos.
+     * 
+     * @param recetaId El ID de la receta a obtener.
+     * @return La receta obtenida.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
     public Receta getReceta(int recetaId) throws SQLException {
         Receta receta = null;
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            // Obtener la receta
             String sqlReceta = "SELECT * FROM Recetas WHERE RecetaID = ?";
             try (PreparedStatement stmtReceta = conn.prepareStatement(sqlReceta)) {
                 stmtReceta.setInt(1, recetaId);
@@ -143,7 +165,6 @@ public class RecetaDAO {
                     }
                 }
 
-                // Obtener los ingredientes
                 String sqlIngrediente = "SELECT * FROM Ingredientes WHERE RecetaID = ?";
                 try (PreparedStatement stmtIngrediente = conn.prepareStatement(sqlIngrediente)) {
                     stmtIngrediente.setInt(1, recetaId);
@@ -155,7 +176,6 @@ public class RecetaDAO {
                     }
                 }
 
-                // Obtener los utensilios
                 String sqlUtensilio = "SELECT * FROM Utensilios WHERE RecetaID = ?";
                 try (PreparedStatement stmtUtensilio = conn.prepareStatement(sqlUtensilio)) {
                     stmtUtensilio.setInt(1, recetaId);
@@ -167,14 +187,21 @@ public class RecetaDAO {
                     }
                 }
             }
+        } catch (SQLException e) {
+            System.out.println("Error: " + e.getMessage());
         }
         return receta;
     }
 
+    /**
+     * Obtiene todas las recetas de la base de datos.
+     * 
+     * @return Una lista de todas las recetas.
+     * @throws SQLException Si ocurre un error al acceder a la base de datos.
+     */
     public List<Receta> getAllRecetas() throws SQLException {
         List<Receta> recetas = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection(DB_URL, USER, PASS)) {
-            // Obtener todas las recetas
             String sqlReceta = "SELECT * FROM Recetas";
             try (PreparedStatement stmtReceta = conn.prepareStatement(sqlReceta);
                     ResultSet rs = stmtReceta.executeQuery()) {
