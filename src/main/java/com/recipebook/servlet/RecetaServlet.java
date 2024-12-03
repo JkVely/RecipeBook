@@ -46,12 +46,15 @@ public class RecetaServlet extends HttpServlet {
 
         String utensiliosJson = request.getParameter("utensilios");
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
-        
+
         Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
 
         String pasosJson = request.getParameter("pasos");
-        Map[] mapPasos = new Gson().fromJson(pasosJson, Map[].class);
-        for (Map p : mapPasos){
+        Map<String, String>[] mapPasos;
+        mapPasos = new Gson().fromJson(
+                pasosJson,
+                Map[].class);
+        for (Map<String, String> p : mapPasos) {
             String descripcionPaso = (String) p.get("descripcion");
             String tiempoStr = (String) p.get("tiempo");
             int tiempo = Integer.parseInt(tiempoStr);
@@ -118,5 +121,5 @@ public class RecetaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
+
 }
