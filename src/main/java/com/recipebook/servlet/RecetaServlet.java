@@ -81,6 +81,7 @@ public class RecetaServlet extends HttpServlet {
 
         try {
             recetaDAO.addReceta(receta);
+            System.out.println("Receta agregada: " + receta.getNombre());
         } catch (SQLException e) {
             System.out.println("Error al agregar receta");
         }
