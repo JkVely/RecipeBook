@@ -33,14 +33,14 @@ RecipeBook es una aplicación Java diseñada para gestionar y organizar recetas 
 
 ## 💡 Uso
 ```
-1. Agregar nuevas recetas con el botón '+'
+1. Agregar nuevas recetas con el botón 'Subir receta'
 2. Navegar por categorías de recetas
 3. Buscar usando palabras clave
 4. Seguir los pasos detallados de cada receta
 ```
 
 ## 🔄 Versión
-1.0.0 (2023)
+1.0.0 (2024)
 
 ## 📝 Licencia
 Este proyecto está bajo la Licencia MIT.
