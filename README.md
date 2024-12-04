@@ -6,8 +6,9 @@
 - David
 
 ## 🖼️ Vista Previa
-![Ejemplo de Receta](https://imgur.com/ZBEpTYd)
-*(Nota: Reemplazar con la URL real de la imagen de la aplicación)*
+<p align="center">
+  <img alt="SIR Model Simulation" src="https://imgur.com/ZBEpTYd.png">
+</p>
 
 ## 📋 Descripción del Proyecto
 RecipeBook es una aplicación Java diseñada para gestionar y organizar recetas digitalmente. Nuestro objetivo es crear una plataforma intuitiva y fácil de usar para los entusiastas de la cocina.
@@ -32,14 +33,14 @@ RecipeBook es una aplicación Java diseñada para gestionar y organizar recetas 
 
 ## 💡 Uso
 ```
-1. Agregar nuevas recetas con el botón '+'
+1. Agregar nuevas recetas con el botón 'Subir receta'
 2. Navegar por categorías de recetas
 3. Buscar usando palabras clave
 4. Seguir los pasos detallados de cada receta
 ```
 
 ## 🔄 Versión
-1.0.0 (2023)
+1.0.0 (2024)
 
 ## 📝 Licencia
 Este proyecto está bajo la Licencia MIT.
