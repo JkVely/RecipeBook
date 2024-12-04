@@ -6,8 +6,9 @@
 - David
 
 ## 🖼️ Vista Previa
-[Imgur](https://imgur.com/ZBEpTYd)
-*(Nota: Reemplazar con la URL real de la imagen de la aplicación)*
+<p align="center">
+  <img alt="SIR Model Simulation" src="https://imgur.com/ZBEpTYd">
+</p>
 
 ## 📋 Descripción del Proyecto
 RecipeBook es una aplicación Java diseñada para gestionar y organizar recetas digitalmente. Nuestro objetivo es crear una plataforma intuitiva y fácil de usar para los entusiastas de la cocina.
