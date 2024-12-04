@@ -24,10 +24,18 @@ import com.recipebook.logic.RecipeTypes;
  */
 public class RecetaDAO {
 
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("MySQL JDBC driver not found.", e);
+        }
+    }
+
     private static final String DB_URL = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433";
     private static final String USER = "admin";
     private static final String PASS = "JkVely1029";
-
+    
     /**
      * Agrega una nueva receta a la base de datos.
      * 
