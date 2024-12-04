@@ -7,7 +7,7 @@
 
 ## 🖼️ Vista Previa
 <p align="center">
-  <img alt="SIR Model Simulation" src="https://imgur.com/ZBEpTYd">
+  <img alt="SIR Model Simulation" src="https://imgur.com/ZBEpTYd.png">
 </p>
 
 ## 📋 Descripción del Proyecto
