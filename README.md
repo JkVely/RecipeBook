@@ -6,7 +6,7 @@
 - David
 
 ## 🖼️ Vista Previa
-![Ejemplo de Receta](https://imgur.com/ZBEpTYd)
+[Imgur](https://imgur.com/ZBEpTYd)
 *(Nota: Reemplazar con la URL real de la imagen de la aplicación)*
 
 ## 📋 Descripción del Proyecto
