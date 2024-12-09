@@ -18,7 +18,6 @@ public class SQLController {
         String connectionUrl = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433;user=admin;password=JkVely1029";
 
         try {
-            // Load SQL Server JDBC driver and establish connection.
             System.out.print("Connecting to SQL Server ... ");
             connection = DriverManager.getConnection(connectionUrl);
             System.out.println("Done.");

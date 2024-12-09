@@ -6,6 +6,7 @@ import java.util.Map;
 
 import com.google.gson.Gson;
 import com.recipebook.dao.RecetaDAO;
+import com.recipebook.dao.SQLController;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 
@@ -39,7 +40,8 @@ public class RecetaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        RecetaDAO recetaDAO = new RecetaDAO();
+        SQLController sqlController = new SQLController();
+        RecetaDAO recetaDAO = new RecetaDAO(sqlController);
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
         String imagen = request.getParameter("imagen");
@@ -77,13 +79,6 @@ public class RecetaServlet extends HttpServlet {
         }
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
-        }
-
-        try {
-            recetaDAO.addReceta(receta);
-            System.out.println("Receta agregada: " + receta.getNombre());
-        } catch (SQLException e) {
-            System.out.println("Error al agregar receta");
         }
 
         HttpSession session = request.getSession();
