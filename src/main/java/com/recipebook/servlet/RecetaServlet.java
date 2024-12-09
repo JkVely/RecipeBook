@@ -46,7 +46,7 @@ public class RecetaServlet extends HttpServlet {
             throws ServletException, IOException {
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
-        String urlImagen = request.getParameter("imagen");
+        String imagen = request.getParameter("imagen");
         String descripcion = request.getParameter("descripcion");
 
         String ingredientesJson = request.getParameter("ingredientes");
@@ -55,7 +55,7 @@ public class RecetaServlet extends HttpServlet {
         String utensiliosJson = request.getParameter("utensilios");
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
         
-        Receta receta = new Receta(nombre, urlImagen, descripcion, RecipeTypes.valueOf(tipo));
+        Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
 
         String pasosJson = request.getParameter("pasos");
         Map[] mapPasos = new Gson().fromJson(pasosJson, Map[].class);
@@ -116,6 +116,9 @@ public class RecetaServlet extends HttpServlet {
             
             String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
             
+            String filePath = uploadPath + File.separator + fileName;
+            filePart.write(filePath);
+
             String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
             File uploadDir = new File(uploadPath);
             filePart.write(uploadPath + File.separator + fileName);

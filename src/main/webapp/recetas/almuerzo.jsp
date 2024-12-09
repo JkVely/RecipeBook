@@ -14,7 +14,7 @@
 </head>
 <body>
     <h1>Receta de Almuerzo: "${receta.getNombre()}"</h1>
-    <img src="${receta.getImagen()}" alt="Imagen de la receta" />
+    <img src="${receta.getImagen()}" alt="Imagen de la receta"  />
     <p><strong>Descripción:</strong> "${receta.getDescripcion()}"</p>
     <h2>Ingredientes:</h2>
     <ul>
