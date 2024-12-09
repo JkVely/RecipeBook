@@ -30,8 +30,8 @@
                 </select>
             </div>
             <div>
-                <label for="imagen">URL de la Imagen:</label>
-                <input type="text" id="imagen" name="imagen">
+                <label for="imagen">Ingresa una imagen del plato:</label>
+                <input type="file" id="imagen" name="imagen">
             </div>
             <div>
                 <label for="descripcion">Descripción:</label>
@@ -169,6 +169,36 @@
             actualizarPasos();
             // El formulario se enviará automáticamente al servlet
         });
+        async function subirImagen() {
+        const fileInput = document.getElementById('imagen');
+        const file = fileInput.files[0]; // Obtener la imagen seleccionada
+
+        const formData = new FormData(); 
+        formData.append('file', file); 
+
+        try {
+            // Enviar la imagen al servidor 
+            const response = await fetch('RecetaServlet', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                const result = await response.json(); // Leer respuesta del servidor
+                alert(`Imagen subida exitosamente: ${result.filePath}`);
+            } else {
+                alert('Error al subir la imagen.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Error al comunicarse con el servidor.');
+        }
+    }
+
+    document.getElementById('receta-form').addEventListener('submit', function (e) {
+        e.preventDefault(); 
+        subirImagen(); 
+    });
     </script>
 </body>
 </html>
