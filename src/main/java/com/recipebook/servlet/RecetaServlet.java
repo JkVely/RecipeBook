@@ -75,11 +75,14 @@ public class RecetaServlet extends HttpServlet {
         }
 
         for (String ingrediente : ingredientes) {
+            
             receta.addIngrediente(ingrediente);
         }
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
         }
+
+        recetaDAO.agregarReceta(receta);
 
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);
