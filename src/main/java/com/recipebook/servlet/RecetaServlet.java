@@ -82,7 +82,8 @@ public class RecetaServlet extends HttpServlet {
             receta.addUtensilio(utensilio);
         }
 
-        recetaDAO.agregarReceta(receta);
+        recetaDAO.agregarReceta((Receta) receta);
+        System.out.println("receta agregada");
 
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);

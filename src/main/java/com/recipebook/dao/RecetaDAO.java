@@ -21,12 +21,6 @@ public class RecetaDAO {
 
     public RecetaDAO(SQLController sqlController) {
         this.sqlController = sqlController;
-        try {
-            sqlController.executeUpdate("USE recipe");
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Error al seleccionar la base de datos.");
-        }
     }
 
     /**
