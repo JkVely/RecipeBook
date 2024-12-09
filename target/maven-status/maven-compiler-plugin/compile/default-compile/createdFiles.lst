@@ -1,8 +1,0 @@
-com\recipebook\logic\Paso.class
-com\recipebook\logic\Receta.class
-com\recipebook\resources\JakartaEE11Resource.class
-com\recipebook\JakartaRestConfiguration.class
-com\recipebook\servlet\RecetaServlet$1.class
-com\recipebook\logic\RecipeTypes.class
-com\recipebook\Main.class
-com\recipebook\servlet\RecetaServlet.class

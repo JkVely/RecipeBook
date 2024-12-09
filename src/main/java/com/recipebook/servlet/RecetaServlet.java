@@ -4,13 +4,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Paths;
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.recipebook.Main;
-import com.recipebook.Test;
-import com.recipebook.logic.Paso;
+import com.recipebook.dao.RecetaDAO;
+import com.recipebook.dao.SQLController;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 
@@ -41,9 +40,12 @@ public class RecetaServlet extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException      if an I/O error occurs
+     * @throws SQLException 
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        SQLController sqlController = new SQLController();
+        RecetaDAO recetaDAO = new RecetaDAO(sqlController);
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
         String imagen = request.getParameter("imagen");
@@ -54,12 +56,15 @@ public class RecetaServlet extends HttpServlet {
 
         String utensiliosJson = request.getParameter("utensilios");
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
-        
+
         Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
 
         String pasosJson = request.getParameter("pasos");
-        Map[] mapPasos = new Gson().fromJson(pasosJson, Map[].class);
-        for (Map p : mapPasos){
+        Map<String, String>[] mapPasos;
+        mapPasos = new Gson().fromJson(
+                pasosJson,
+                Map[].class);
+        for (Map<String, String> p : mapPasos) {
             String descripcionPaso = (String) p.get("descripcion");
             String tiempoStr = (String) p.get("tiempo");
             int tiempo = Integer.parseInt(tiempoStr);
@@ -74,16 +79,20 @@ public class RecetaServlet extends HttpServlet {
         }
 
         for (String ingrediente : ingredientes) {
+            
             receta.addIngrediente(ingrediente);
         }
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
         }
 
+        recetaDAO.agregarReceta(receta);
+
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);
         session.setAttribute("pasos", receta.getPasos());
 
+        response.sendRedirect("./recetas/receta.jsp");
         switch (receta.getTipo()) {
             case ALMUERZO -> {
                 response.sendRedirect("recetas/almuerzo.jsp");
@@ -166,4 +175,5 @@ public class RecetaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

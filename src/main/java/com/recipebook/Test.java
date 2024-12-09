@@ -1,52 +1,30 @@
 package com.recipebook;
-import com.recipebook.logic.*;
+
+import com.recipebook.dao.RecetaDAO;
+import com.recipebook.dao.SQLController;
+import com.recipebook.logic.Receta;
+import com.recipebook.logic.RecipeTypes;
 
 public class Test {
-
-    private Receta receta;
-
-    public Test(Receta receta){
-        this.receta = receta;
-    }
-
-    public void initialize() {
-        this.getReceta(this.receta);
-    }
-
-    public void getReceta(Receta receta){
-        if(receta != null){
-            System.out.println("Receta: " + receta.getNombre());
-            System.out.println("Tipo: " + receta.getTipo());
-            System.out.println("Imagen: " + receta.getImagen());
-            System.out.println("Descripcion: " + receta.getDescripcion());
-            System.out.println("Ingredientes: ");
-            for (String i : receta.getIngredientes()){
-                System.out.println(i);
-            }
-            System.out.println("Utensilios: ");
-            for (String u : receta.getUtensilios()){
-                System.out.println(u);
-            }
-            System.out.println("Pasos: ");
-            for (Paso p : receta.getPasos()){
-                System.out.println("Paso " + p.getId());
-                System.out.println("Descripcion: " + p.getDescripcion());
-                System.out.println("Tiempo: " + p.getTiempo());
-                System.out.println("Utensilios: ");
-                for (String u : p.getUtensilios()){
-                    System.out.println(u);
-                }
-                System.out.println("Ingredientes: ");
-                for (String i : p.getIngredientes()){
-                    System.out.println(i);
-                }
-                System.out.println("Imagen: " + p.getImagen());
-            }
+    public static void main(String[] args) {
+        SQLController sqlController = new SQLController();
+        if (sqlController.isConnected()) {
+            System.out.println("Connected to the database.");
+        } else {
+            System.out.println("Failed to connect to the database.");
+            return;
         }
-    }
+        RecetaDAO recetaDAO = new RecetaDAO(sqlController);
+        System.out.println("RecetaDAO created.");
+        Receta receta = new Receta("Receta de prueba", "imagen.jpg", "Descripción de la receta", RecipeTypes.POSTRE);
+        receta.addStep("Paso 1", 10, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso1.jpg");
+        receta.addStep("Paso 2", 20, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso2.jpg");
+        receta.addStep("Paso 3", 30, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso3.jpg");
 
-    public void setReceta(Receta receta){
-        this.receta = receta;
-        initialize();
+        recetaDAO.agregarReceta(receta);
+        System.out.println("Receta added to the database.");
+
+        sqlController.closeConnection();
+        System.out.println("Connection closed.");
     }
 }
