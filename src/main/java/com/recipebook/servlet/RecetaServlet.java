@@ -1,6 +1,9 @@
 package com.recipebook.servlet;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,6 +20,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
 /**
  * 
@@ -42,7 +46,7 @@ public class RecetaServlet extends HttpServlet {
             throws ServletException, IOException {
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
-        String imagen = request.getParameter("imagen");
+        String urlImagen = request.getParameter("imagen");
         String descripcion = request.getParameter("descripcion");
 
         String ingredientesJson = request.getParameter("ingredientes");
@@ -51,7 +55,7 @@ public class RecetaServlet extends HttpServlet {
         String utensiliosJson = request.getParameter("utensilios");
         String[] utensilios = new Gson().fromJson(utensiliosJson, String[].class);
         
-        Receta receta = new Receta(nombre, imagen, descripcion, RecipeTypes.valueOf(tipo));
+        Receta receta = new Receta(nombre, urlImagen, descripcion, RecipeTypes.valueOf(tipo));
 
         String pasosJson = request.getParameter("pasos");
         Map[] mapPasos = new Gson().fromJson(pasosJson, Map[].class);
@@ -107,6 +111,16 @@ public class RecetaServlet extends HttpServlet {
             }
             default -> throw new AssertionError();
         }
+        Part filePart = request.getPart("imagen");
+        if (filePart != null && filePart.getSize() > 0) {
+            
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            filePart.write(uploadPath + File.separator + fileName);
+            response.getWriter().println("Imagen subida exitosamente: " + fileName);
+        }
 
     }
 
@@ -149,5 +163,4 @@ public class RecetaServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-    
 }
