@@ -22,6 +22,7 @@ import jakarta.servlet.http.HttpSession;
  * @author Juan Quintero
  * @author Giovanni
  * @author David
+ * 
  * @version 1.0
  * @since 2023-10-01
  */
