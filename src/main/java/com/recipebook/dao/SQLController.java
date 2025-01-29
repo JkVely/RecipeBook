@@ -15,7 +15,7 @@ public class SQLController {
     }
 
     private boolean start() {
-        String connectionUrl = "jdbc:sqlserver://WILLIAMQUINTERO:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;user=WILLIAMQUINTERO\\jkqui";
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
 
         try {
             System.out.print("Connecting to SQL Server ... ");
