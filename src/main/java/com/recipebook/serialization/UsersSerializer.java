@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class UsersSerializer {
 
-    private static final String FILE_PATH = "src/main/webapp/recetas/users.ser";
+    private static final String FILE_PATH = "src/main/webapp/resources/users/users.ser";
 
     public void serializeUser(User user) {
         try (FileOutputStream fileOut = new FileOutputStream(FILE_PATH);

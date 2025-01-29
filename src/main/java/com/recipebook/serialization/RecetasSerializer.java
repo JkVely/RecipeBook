@@ -10,7 +10,7 @@ import java.io.ObjectOutputStream;
 
 public class RecetasSerializer {
 
-    private static final String FILE_PATH = "src/main/webapp/recetas/recetas.ser";
+    private static final String FILE_PATH = "src/main/webapp/resources/recetas/recetas.ser";
 
     public void serializeRecetas(RecetasContainer recetasContainer) {
         try (FileOutputStream fileOut = new FileOutputStream(FILE_PATH);
