@@ -1,9 +1,11 @@
 package com.recipebook.logic;
 
+import java.io.Serializable;
 import java.util.Optional;
 
-public class Paso {
-    private int id;
+public class Paso implements Serializable {
+    private static final long serialVersionUID = 1L;
+    private final int id;
     private String descripcion;
     private int tiempo; 
     private String[] utensilios;
