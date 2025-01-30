@@ -31,7 +31,7 @@ public class RecetaDAO {
      */
     public boolean agregarReceta(Receta receta) {
         String insertRecetaQuery = String.format(
-            "USE recipe; INSERT INTO Recetas (Nombre, Tipo, Imagen, Descripcion, Tiempo, Valor) VALUES ('%s', '%s', '%s', '%s', %d, %.2f)",
+            "INSERT INTO Recetas (Nombre, Tipo, Imagen, Descripcion, Tiempo, Valor) VALUES ('%s', '%s', '%s', '%s', %d, %.2f)",
             receta.getNombre(), receta.getTipo(), receta.getImagen(), receta.getDescripcion(), receta.getTiempo(), receta.getValor()
         );
 

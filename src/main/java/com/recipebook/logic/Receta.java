@@ -1,21 +1,23 @@
 package com.recipebook.logic;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Receta {
+public class Receta implements Serializable {
+    private static final long serialVersionUID = 1L;
     private String nombre;
     private RecipeTypes tipo;
     private Optional<String> imagen;
     private Optional<String> descripcion;
-    private List<String> ingredientes;
-    private List<String> utensilios;
+    private final List<String> ingredientes;
+    private final List<String> utensilios;
     private int tiempo; // en minutos.segundos
     private String duracion;
-    private List<Paso> pasos;
+    private final List<Paso> pasos;
     private double valor;
-    private List<Double> valoracion;
+    private final List<Double> valoracion;
 
     public Receta(String nombre, String imagen, String descripcion, RecipeTypes tipo){
         this.nombre = nombre;

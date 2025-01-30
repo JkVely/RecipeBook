@@ -15,7 +15,7 @@ public class SQLController {
     }
 
     private boolean start() {
-        String connectionUrl = "jdbc:sqlserver://recipebook.c7ek2so26gog.us-east-2.rds.amazonaws.com:1433;user=admin;password=JkVely1029";
+        String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
 
         try {
             System.out.print("Connecting to SQL Server ... ");

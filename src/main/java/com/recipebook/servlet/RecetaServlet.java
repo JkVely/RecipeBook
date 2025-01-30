@@ -26,6 +26,7 @@ import jakarta.servlet.http.Part;
  * @author Juan Quintero
  * @author Giovanni
  * @author David
+ * 
  * @version 1.0
  * @since 2023-10-01
  */
@@ -86,7 +87,8 @@ public class RecetaServlet extends HttpServlet {
             receta.addUtensilio(utensilio);
         }
 
-        recetaDAO.agregarReceta(receta);
+        recetaDAO.agregarReceta((Receta) receta);
+        System.out.println("receta agregada");
 
         HttpSession session = request.getSession();
         session.setAttribute("receta", receta);
