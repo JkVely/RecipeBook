@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="js/registro.js" defer></script>
+    </head>
+    <body>
+        <div>
+            <header>
+                <h1>Registro de usuario</h1>
+            </header>
+            <form id="receta-form" action="RegistroServlet" method="POST">
+                <div>
+                    <label for="username">Nombre de usuario:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div>
+                    <label for="password">Contraseña:</label>
+                    <input type = "text" id="password" name="password" required>
+                </div>
+                <div>
+                    <label for="confContraseña">Confirmar Contraseña:</label>
+                    <input type="text" id="confPassword" name="confPassword" >
+                </div>
+                <p id="mensaje"></p>
+                <button type="button" onclick="compararContraseñas()">Subir</button>
+            </form>
+        </div>
+    </body>
+</html>

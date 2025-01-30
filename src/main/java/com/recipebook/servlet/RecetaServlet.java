@@ -1,6 +1,9 @@
 package com.recipebook.servlet;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -16,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.servlet.http.Part;
 
 /**
  * 
@@ -91,6 +95,47 @@ public class RecetaServlet extends HttpServlet {
         session.setAttribute("pasos", receta.getPasos());
 
         response.sendRedirect("./recetas/receta.jsp");
+        switch (receta.getTipo()) {
+            case ALMUERZO -> {
+                response.sendRedirect("recetas/almuerzo.jsp");
+            }
+            case DESAYUNO -> {
+                response.sendRedirect("recetas/desayuno.jsp");
+            }
+            case CENA -> {
+                response.sendRedirect("recetas/cena.jsp");
+            }
+            case POSTRE -> {
+                response.sendRedirect("recetas/postre.jsp");
+            }
+            case BEBIDA -> {
+                response.sendRedirect("./recetas/bebida.jsp");
+            }
+            case ENSALADA -> {
+                response.sendRedirect("recetas/ensalada.jsp");
+            }
+            case GUARNICION -> {
+                response.sendRedirect("recetas/guarnicion.jsp");
+            }
+            case SNACK -> {
+                response.sendRedirect("recetas/snack.jsp");
+            }
+            default -> throw new AssertionError();
+        }
+        Part filePart = request.getPart("imagen");
+        if (filePart != null && filePart.getSize() > 0) {
+            
+            String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+            
+            String filePath = uploadPath + File.separator + fileName;
+            filePart.write(filePath);
+
+            String uploadPath = getServletContext().getRealPath("") + File.separator + "uploads";
+            File uploadDir = new File(uploadPath);
+            filePart.write(uploadPath + File.separator + fileName);
+            response.getWriter().println("Imagen subida exitosamente: " + fileName);
+        }
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
