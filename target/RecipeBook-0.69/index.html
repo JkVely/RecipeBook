@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Global Recipe Book - Tu Pasaporte Culinario</title>
+        <link rel="stylesheet" href="css/index.css">
+        <script src="js/index.js" defer></script>
+    </head>
+    <body>
+        <div class="book-cover">
+            <header>
+                <h1 class="book-title">Global Recipe Book</h1>
+                <p class="book-subtitle">Tu Pasaporte Culinario</p>
+            </header>
+
+            <main>
+                <section class="intro">
+                    <p class="tagline">Explora sabores del mundo desde tu
+                        cocina</p>
+                    <p class="description">Bienvenido a <strong>Global Recipe
+                            Book</strong>, tu compañero culinario en la aventura
+                        de descubrir y compartir los tesoros gastronómicos de
+                        cada rincón del planeta.</p>
+                </section>
+
+                <section class="features">
+                    <div class="feature">
+                        <img src="resources/img/upload-icon.svg"
+                            alt="Icono de subida" class="feature-icon">
+                        <p>Comparte tus recetas únicas</p>
+                    </div>
+                    <div class="feature">
+                        <img src="resources/img/search-icon.svg"
+                            alt="Icono de exploración" class="feature-icon">
+                        <p>Explora platos de todo el mundo</p>
+                    </div>
+                    <div class="feature">
+                        <img src="resources/img/community-icon.svg"
+                            alt="Icono de comunidad" class="feature-icon">
+                        <p>Únete a una comunidad apasionada</p>
+                    </div>
+                </section>
+
+                <section class="cta-section">
+                    <a href="./explorar.html"
+                        class="cta-button explore">Explorar Recetas</a>
+                    <form action="IndexServlet" method="post">
+                        <button type="submit" class="cta-button upload">Compartir tu Receta</button>
+                    </form>
+                </section>
+            </main>
+
+            <footer>
+                <p class="quote">"La cocina es el paisaje puesto en la olla." -
+                    Proverbio chino</p>
+            </footer>
+        </div>
+    </body>
+</html>

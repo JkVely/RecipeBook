@@ -12,3 +12,15 @@ function compararContraseñas() {
         mensaje.style.color = 'red';
     }
 }
+
+function verificarUsername() {
+    const username = document.getElementById('username').value;
+    const mensaje = document.getElementById('mensaje');
+
+    if (usernames.includes(username)) {
+        mensaje.textContent = 'Error: El nombre de usuario ya existe.';
+        mensaje.style.color = 'red';
+    } else {
+        mensaje.textContent = '';
+    }
+}
