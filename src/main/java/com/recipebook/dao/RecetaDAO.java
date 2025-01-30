@@ -6,16 +6,6 @@ import java.sql.SQLException;
 import com.recipebook.logic.Paso;
 import com.recipebook.logic.Receta;
 
-/**
- * RecetaDAO (Data Access Object) es una clase que se encarga de manejar la
- * persistencia de las recetas en la base de datos.
- * Proporciona métodos para agregar, borrar y obtener información de las
- * recetas.
- * 
- * @see com.recipebook.logic.Receta
- * @see com.recipebook.logic.Paso
- * @see com.recipebook.logic.RecipeTypes
- */
 public class RecetaDAO {
     private final SQLController sqlController;
 
@@ -27,12 +17,13 @@ public class RecetaDAO {
      * Agrega una receta a la base de datos.
      * 
      * @param receta Receta a agregar.
+     * @param userID ID del usuario al que pertenece la receta.
      * @return true si la receta se agregó correctamente, false en caso contrario.
      */
-    public boolean agregarReceta(Receta receta) {
+    public boolean agregarReceta(Receta receta, int userID) {
         String insertRecetaQuery = String.format(
-            "INSERT INTO Recetas (Nombre, Tipo, Imagen, Descripcion, Tiempo, Valor) VALUES ('%s', '%s', '%s', '%s', %d, %.2f)",
-            receta.getNombre(), receta.getTipo(), receta.getImagen(), receta.getDescripcion(), receta.getTiempo(), receta.getValor()
+            "INSERT INTO Recetas (UserID, Nombre, Tipo, Imagen, Descripcion, Tiempo, Valor) VALUES (%d, '%s', '%s', '%s', '%s', %d, %.2f)",
+            userID, receta.getNombre(), receta.getTipo(), receta.getImagen(), receta.getDescripcion(), receta.getTiempo(), receta.getValor()
         );
 
         try {

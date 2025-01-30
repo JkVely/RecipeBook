@@ -14,14 +14,7 @@ public class Test {
             System.out.println("Failed to connect to the database.");
             return;
         }
-        RecetaDAO recetaDAO = new RecetaDAO(sqlController);
-        System.out.println("RecetaDAO created.");
-        Receta receta = new Receta("Receta de prueba", "imagen.jpg", "Descripción de la receta", RecipeTypes.POSTRE);
-        receta.addStep("Paso 1", 10, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso1.jpg");
-        receta.addStep("Paso 2", 20, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso2.jpg");
-        receta.addStep("Paso 3", 30, new String[] { "Cuchara", "Olla" }, new String[] { "Azúcar", "Leche" }, "paso3.jpg");
 
-        recetaDAO.agregarReceta(receta);
         System.out.println("Receta added to the database.");
 
         sqlController.closeConnection();
