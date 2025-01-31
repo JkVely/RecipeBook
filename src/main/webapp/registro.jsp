@@ -17,36 +17,42 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Registro de Usuario - RecipeBook</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/registro.css">
         <script>
             let usernames = [<%= usernames.stream().map(username -> "\"" + username + "\"").collect(Collectors.joining(",")) %>];
         </script>
-        <script src="js/registro.js" defer></script>
+        <script src="js/registro.js"></script>
     </head>
     <body>
-        <div>
+        <div class="container">
             <header>
                 <h1>Registro de usuario</h1>
             </header>
             <form id="receta-form" action="RegistroServlet" method="POST">
-                <div>
+                <div class="form-group">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username" required onblur="verificarUsername()">
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="password">Contraseña:</label>
                     <input type="password" id="password" name="password" required>
                 </div>
-                <div>
+                <div class="form-group">
                     <label for="confPassword">Confirmar Contraseña:</label>
                     <input type="password" id="confPassword" name="confPassword" required>
                 </div>
                 <p id="mensaje"></p>
-                <button type="submit" onclick="compararContraseñas()">Subir</button>
+                <div class="button-group">
+                    <button id="registrarse" type="submit" onclick="compararContraseñas()">Registrarse</button>
+                    <a href="index.html" class="cancel-button">Cancelar</a>
+                </div>
             </form>
-            <a href="login.html">login</a>
+            <div class="login-link">
+                <a href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
+            </div>
         </div>
     </body>
 </html>
