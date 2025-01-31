@@ -24,7 +24,7 @@
         <script>
             let usernames = [<%= usernames.stream().map(username -> "\"" + username + "\"").collect(Collectors.joining(",")) %>];
         </script>
-        <script src="js/registro.js"></script>
+        <script src="./js/registro.js"></script>
     </head>
     <body>
         <div class="container">
