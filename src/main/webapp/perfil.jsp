@@ -3,8 +3,8 @@
 <%@ page import="com.recipebook.logic.UsersContainer" %>
 <%@ page import="java.util.List" %>
 <%
-    UsersContainer usersContainer = (UsersContainer) session.getAttribute("usersContainer");
-    User currentUser = (User) session.getAttribute("currentUser");
+    UsersContainer usersContainer = (UsersContainer) request.getAttribute("usersContainer");
+    User currentUser = (User) request.getAttribute("currentUser");
 %>
 <!DOCTYPE html>
 <html>

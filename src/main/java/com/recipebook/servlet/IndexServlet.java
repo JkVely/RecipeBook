@@ -4,16 +4,16 @@
  */
 package com.recipebook.servlet;
 
-import com.recipebook.logic.*;
+import java.io.IOException;
+
+import com.recipebook.logic.UsersContainer;
 import com.recipebook.serialization.UsersSerializer;
 
-import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -34,7 +34,6 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        HttpSession session = request.getSession();
         UsersSerializer usersSerializer = new UsersSerializer();
         UsersContainer usersContainer = usersSerializer.deserializeUser();
 
@@ -44,8 +43,8 @@ public class IndexServlet extends HttpServlet {
             usersContainer = usersSerializer.deserializeUser();
         }
 
-        session.setAttribute("usersContainer", usersContainer);
-        response.sendRedirect("registro.jsp");
+        request.setAttribute("usersContainer", usersContainer);
+        request.getRequestDispatcher("registro.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
