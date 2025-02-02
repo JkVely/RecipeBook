@@ -38,12 +38,45 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required onblur="verificarPassword()">
+                    <div class="password-container">
+                        <input type="password" id="password" name="password" required onblur="verificarPassword()">
+                        <i class="fa fa-eye password-toggle-icon" onclick="togglePasswordVisibility('password')"></i>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="confPassword">Confirmar Contraseña:</label>
-                    <input type="password" id="confPassword" name="confPassword" required onblur="verificarPassword()">
+                    <div class="password-container">
+                        <input type="password" id="confPassword" name="confPassword" required onblur="verificarPassword()">
+                        <i class="fa fa-eye password-toggle-icon" onclick="togglePasswordVisibility('confPassword')"></i>
+                    </div>
                 </div>
+                <script>
+                    function togglePasswordVisibility(id) {
+                        var passwordField = document.getElementById(id);
+                        var toggleIcon = passwordField.nextElementSibling;
+                        if (passwordField.type === "password") {
+                            passwordField.type = "text";
+                            toggleIcon.classList.remove("fa-eye");
+                            toggleIcon.classList.add("fa-eye-slash");
+                        } else {
+                            passwordField.type = "password";
+                            toggleIcon.classList.remove("fa-eye-slash");
+                            toggleIcon.classList.add("fa-eye");
+                        }
+                    }
+                </script>
+                <style>
+                    .password-container {
+                        position: relative;
+                        display: flex;
+                        align-items: center;
+                    }
+                    .password-toggle-icon {
+                        position: absolute;
+                        right: 10px;
+                        cursor: pointer;
+                    }
+                </style>
                 <p id="mensaje"></p>
                 <div class="button-group">
                     <button id="registrarse" type="submit">Registrarse</button>
