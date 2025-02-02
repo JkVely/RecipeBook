@@ -14,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -34,6 +35,14 @@ public class IndexServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
+
+        HttpSession session = request.getSession();
+        if (session != null) {
+            session.invalidate(); // Invalidar la sesión actual
+        }
+        session = request.getSession(true); // Crear una nueva sesión
+
+        session.setAttribute("userContainer", null);
         UsersSerializer usersSerializer = new UsersSerializer();
         UsersContainer usersContainer = usersSerializer.deserializeUser();
 
@@ -43,8 +52,8 @@ public class IndexServlet extends HttpServlet {
             usersContainer = usersSerializer.deserializeUser();
         }
 
-        request.setAttribute("usersContainer", usersContainer);
-        request.getRequestDispatcher("registro.jsp").forward(request, response);
+        session.setAttribute("usersContainer", usersContainer);
+        response.sendRedirect("registro.jsp");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the
@@ -76,15 +85,4 @@ public class IndexServlet extends HttpServlet {
             throws ServletException, IOException {
         processRequest(request, response);
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }

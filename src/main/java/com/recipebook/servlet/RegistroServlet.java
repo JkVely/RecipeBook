@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import com.recipebook.logic.*;
 import com.recipebook.serialization.UsersSerializer;
@@ -16,17 +17,18 @@ public class RegistroServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        UsersContainer usersContainer = (UsersContainer) request.getAttribute("usersContainer");
+        HttpSession session = request.getSession();
+        UsersContainer usersContainer = (UsersContainer) session.getAttribute("usersContainer");
 
         User newUser = new User(username, password);
         usersContainer.addUser(newUser);
 
-        request.setAttribute("usersContainer", usersContainer);
+        session.setAttribute("usersContainer", usersContainer);
 
         UsersSerializer usersSerializer = new UsersSerializer();
         usersSerializer.serializeUser(usersContainer);
 
-        request.setAttribute("currentUser", newUser);
+        session.setAttribute("currentUser", newUser);
         response.sendRedirect("perfil.jsp");
     }
 
