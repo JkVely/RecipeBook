@@ -12,6 +12,7 @@ import com.recipebook.dao.RecetaDAO;
 import com.recipebook.dao.SQLController;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
+import com.recipebook.logic.User;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -45,8 +46,6 @@ public class RecetaServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SQLController sqlController = new SQLController();
-        RecetaDAO recetaDAO = new RecetaDAO(sqlController);
         String nombre = request.getParameter("nombre");
         String tipo = request.getParameter("tipo");
         String imagen = request.getParameter("imagen");
@@ -86,14 +85,15 @@ public class RecetaServlet extends HttpServlet {
         for (String utensilio : utensilios) {
             receta.addUtensilio(utensilio);
         }
-
-        //recetaDAO.agregarReceta((Receta) receta);
         System.out.println("receta agregada");
 
         HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("currentUser");
+        user.addReceta(receta);
+        
+        session.setAttribute("currentUser", user);
         session.setAttribute("receta", receta);
         session.setAttribute("pasos", receta.getPasos());
-
         response.sendRedirect("./receta.jsp");
 
     }

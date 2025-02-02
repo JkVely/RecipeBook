@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.recipebook.logic.User" %>
+<%@ page import="com.recipebook.logic.Receta" %>
 <%
     User currentUser = (User) session.getAttribute("currentUser");
 %>
@@ -30,6 +31,9 @@
                     }
                 %>
             </ul>
+        <div class="add-recipe">
+            <button onclick="window.location.href='subir.html'">Agregar Nueva Receta</button>
+        </div>
         </div>
     </div>
 </body>

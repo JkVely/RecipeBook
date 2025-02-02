@@ -17,9 +17,14 @@
 </head>
 <body>
     <div class="container">
-        <h1>${receta.getNombre()}</h1>
+        <div class="header">
+            <h1 id="nombreReceta">${receta.getNombre()}</h1>
+            <h1 id="perfil"><a href="perfil.jsp">Perfil</a></h1>
+        </div>
+
         <img src="${receta.getImagen()}" alt="Imagen de la receta" class="receta-imagen"/>
         <p><strong>Tipo:</strong> ${receta.getTipo()}</p>
+
         
         <div class="valoracion">
             <p><strong>Valoración:</strong></p>
