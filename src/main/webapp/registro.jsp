@@ -38,15 +38,15 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Contraseña:</label>
-                    <input type="password" id="password" name="password" required>
+                    <input type="password" id="password" name="password" required onblur="verificarPassword()">
                 </div>
                 <div class="form-group">
                     <label for="confPassword">Confirmar Contraseña:</label>
-                    <input type="password" id="confPassword" name="confPassword" required>
+                    <input type="password" id="confPassword" name="confPassword" required onblur="verificarPassword()">
                 </div>
                 <p id="mensaje"></p>
                 <div class="button-group">
-                    <button id="registrarse" type="submit" onclick="validarFormulario()">Registrarse</button>
+                    <button id="registrarse" type="submit">Registrarse</button>
                     <a href="index.html" class="cancel-button">Cancelar</a>
                 </div>
             </form>

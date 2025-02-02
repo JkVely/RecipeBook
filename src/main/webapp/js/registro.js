@@ -1,32 +1,59 @@
-function validarFormulario() {
-    const password = document.getElementById('password').value;
-    const confPassword = document.getElementById('confPassword').value;
-    const username = document.getElementById('username').value;
-    const mensaje = document.getElementById('mensaje');
-    let aceptar = document.getElementById('registrarse');
+document.addEventListener('DOMContentLoaded', function() {
+    const registrarseBtn = document.getElementById('registrarse');
+    registrarseBtn.disabled = true;
 
-    let errorMessage = '';
+    function verificarUsername() {
+        const username = document.getElementById('username').value;
+        const mensaje = document.getElementById('mensaje');
 
-    if (!password || !confPassword || !username) {
-        errorMessage = 'Error: Debe completar todos los campos.';
-    } else if (password !== confPassword) {
-        errorMessage = 'Error: Las contraseñas no coinciden.';
-    } else if (usernames.includes(username)) {
-        errorMessage = 'Error: El nombre de usuario ya existe.';
+        if (usernames.includes(username)) {
+            mensaje.textContent = 'Error: El nombre de usuario ya existe.';
+            mensaje.style.color = 'red';
+            return false;
+        } else {
+            if (mensaje.textContent === 'Error: El nombre de usuario ya existe.') {
+                mensaje.textContent = '';
+            }
+            return true;
+        }
     }
 
-    if (errorMessage) {
-        mensaje.textContent = errorMessage;
-        mensaje.style.color = 'red';
-        aceptar.disabled = true;
-        aceptar.disabled = true;
-        aceptar.setClickeable = false;
-    } else {
-        mensaje.textContent = '';
-        aceptar.disabled = false;
-    }
-}
+    function verificarPassword() {
+        const password = document.getElementById('password').value;
+        const confPassword = document.getElementById('confPassword').value;
+        const mensaje = document.getElementById('mensaje');
 
-document.getElementById('password').addEventListener('input', validarFormulario);
-document.getElementById('confPassword').addEventListener('input', validarFormulario);
-document.getElementById('username').addEventListener('input', validarFormulario);
+        if (password !== confPassword) {
+            if (mensaje.textContent === 'Error: El nombre de usuario ya existe.') {
+                mensaje.textContent = 'Error: Las contraseñas no coinciden.';
+                mensaje.style.color = 'blue';
+            } else
+            return false;
+        } else {
+            if (mensaje.textContent === 'Error: Las contraseñas no coinciden.') {
+                mensaje.textContent = '';
+            }
+            return true;
+        }
+    }
+
+    function validarFormulario() {
+        const isUsernameValid = verificarUsername();
+        const isPasswordValid = verificarPassword();
+
+        registrarseBtn.disabled = !(isUsernameValid && isPasswordValid);
+    }
+
+    document.getElementById('username').addEventListener('input', function() {
+        verificarUsername();
+        validarFormulario();
+    });
+    document.getElementById('password').addEventListener('input', function() {
+        verificarPassword();
+        validarFormulario();
+    });
+    document.getElementById('confPassword').addEventListener('input', function() {
+        verificarPassword();
+        validarFormulario();
+    });
+});
