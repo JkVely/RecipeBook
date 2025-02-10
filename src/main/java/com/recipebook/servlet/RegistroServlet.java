@@ -1,14 +1,16 @@
 package com.recipebook.servlet;
 
+import java.io.IOException;
+
+import com.recipebook.logic.User;
+import com.recipebook.logic.UsersContainer;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import com.recipebook.logic.*;
-import com.recipebook.serialization.UsersSerializer;
 
 @WebServlet(name = "RegistroServlet", urlPatterns = {"/RegistroServlet"})
 public class RegistroServlet extends HttpServlet {
@@ -24,9 +26,6 @@ public class RegistroServlet extends HttpServlet {
         usersContainer.addUser(newUser);
 
         session.setAttribute("usersContainer", usersContainer);
-
-        UsersSerializer usersSerializer = new UsersSerializer();
-        usersSerializer.serializeUser(usersContainer);
 
         session.setAttribute("currentUser", newUser);
         response.sendRedirect("perfil.jsp");

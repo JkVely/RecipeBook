@@ -7,7 +7,6 @@ package com.recipebook.servlet;
 import java.io.IOException;
 
 import com.recipebook.logic.UsersContainer;
-import com.recipebook.serialization.UsersSerializer;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -43,13 +42,11 @@ public class IndexServlet extends HttpServlet {
         session = request.getSession(true); // Crear una nueva sesión
 
         session.setAttribute("userContainer", null);
-        UsersSerializer usersSerializer = new UsersSerializer();
-        UsersContainer usersContainer = usersSerializer.deserializeUser();
-
+        UsersContainer usersContainer = (UsersContainer) session.getAttribute("usersContainer");
         if (usersContainer == null) {
             usersContainer = new UsersContainer();
         } else {
-            usersContainer = usersSerializer.deserializeUser();
+            //[ ]: Agregar la recopilacion de la DB
         }
 
         session.setAttribute("usersContainer", usersContainer);
