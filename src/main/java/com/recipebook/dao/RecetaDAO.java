@@ -3,7 +3,7 @@ package com.recipebook.dao;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.recipebook.logic.Paso;
+import com.recipebook.logic.steps.Paso;
 import com.recipebook.logic.Receta;
 
 public class RecetaDAO {

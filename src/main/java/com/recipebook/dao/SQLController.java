@@ -9,14 +9,13 @@ import java.sql.Statement;
 public class SQLController {
     private Connection connection;
     private boolean connected = false;
+    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
 
     public SQLController() {
-        connected = start();
+        connected = start(this.connectionUrl);
     }
 
-    private boolean start() {
-        String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
-
+    private boolean start(String connectionUrl) {
         try {
             System.out.print("Connecting to SQL Server ... ");
             connection = DriverManager.getConnection(connectionUrl);
