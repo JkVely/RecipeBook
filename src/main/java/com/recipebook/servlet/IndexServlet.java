@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package com.recipebook.servlet;
 
 import java.io.IOException;
@@ -31,14 +27,20 @@ public class IndexServlet extends HttpServlet {
 
     private Connection connection;
     private boolean connected = false;
-    private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
+    private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;username=PCPersonal/jkqui";
 
     private boolean start(String connectionUrl) {
         try {
+            // Cargar el driver JDBC
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             System.out.print("Connecting to SQL Server ... ");
             connection = DriverManager.getConnection(connectionUrl);
             System.out.println("Done.");
             return true;
+        } catch (ClassNotFoundException e) {
+            System.out.println("SQL Server JDBC Driver not found.");
+            e.printStackTrace();
+            return false;
         } catch (SQLException e) {
             System.out.println();
             e.printStackTrace();
@@ -104,11 +106,11 @@ public class IndexServlet extends HttpServlet {
 
         SQLController sqlController = new SQLController();
         connected = sqlController.isConnected();
-        String conexion = connected ? "Conectado - C" : "Desconectado - C";
+        String conexion = connected ? "Conectado C - " : "Desconectado C - ";
 
-        if(!connected) {
-        start(connectionUrl);
-        conexion = isConnected() ? "Conectado" : "Desconectado";
+        if (!connected) {
+            start(connectionUrl);
+            conexion += isConnected() ? "Conectado L" : "Desconectado L";
         }
 
         session.setAttribute("conexion", conexion);

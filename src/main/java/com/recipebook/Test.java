@@ -16,8 +16,5 @@ public class Test {
         }
 
         System.out.println("Receta added to the database.");
-
-        sqlController.closeConnection();
-        System.out.println("Connection closed.");
     }
 }
