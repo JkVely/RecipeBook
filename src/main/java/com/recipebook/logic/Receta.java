@@ -1,12 +1,11 @@
 package com.recipebook.logic;
 
-import java.io.Serializable;
+import com.recipebook.logic.steps.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class Receta implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class Receta {
     private String nombre;
     private RecipeTypes tipo;
     private Optional<String> imagen;
@@ -33,7 +32,12 @@ public class Receta implements Serializable {
     
     public void addStep(String descripcion, int tiempo, String[] utensilios, String[] ingredientes, String imagen){
         int id = pasos.size() + 1;
-        pasos.add(new Paso(id, descripcion, tiempo, utensilios, ingredientes, imagen));
+        pasos.add(new PasoWextras(id, descripcion, tiempo, utensilios, ingredientes, imagen));
+    }
+
+    public void addStep(String descripcion, int tiempo, String imagen){
+        int id = pasos.size() + 1;
+        pasos.add(new PasoSimple(id, descripcion, tiempo, imagen));
     }
     
     public void deleteStep(int id){
