@@ -8,7 +8,7 @@
 <%
     UsersContainer usersContainer = (UsersContainer)(session.getAttribute("usersContainer"));
     List<String> usernames = new ArrayList<>();
-    String connection = (String) session.getAttribute("conexion") 
+    String connection = (String) session.getAttribute("conexion");
     if(usersContainer != null){
         for(User user : usersContainer.getUsers()) {
             usernames.add(user.getUsername());
