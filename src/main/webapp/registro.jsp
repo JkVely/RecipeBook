@@ -8,6 +8,7 @@
 <%
     UsersContainer usersContainer = (UsersContainer)(session.getAttribute("usersContainer"));
     List<String> usernames = new ArrayList<>();
+    String connection = (String) session.getAttribute("conexion");
     if(usersContainer != null){
         for(User user : usersContainer.getUsers()) {
             usernames.add(user.getUsername());
@@ -32,6 +33,7 @@
                 <h1>Registro de usuario</h1>
             </header>
             <form id="receta-form" action="RegistroServlet" method="POST">
+                <h1>conectado a la DB: <%= connection %></h1>
                 <div class="form-group">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username" required onblur="verificarUsername()">
