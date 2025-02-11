@@ -8,6 +8,9 @@
 <%@ page import="java.util.stream.*" %>
 <%
     UsersContainer usersContainer = ((UserDao)session.getAttribute("userDao")).obtenerUsuarios();
+    if(usersContainer == null){
+        usersContainer = new UsersContainer();
+    }
     List<String> usernames = new ArrayList<>();
     String connection = (String) session.getAttribute("conexion");
     if(usersContainer != null){
@@ -87,7 +90,7 @@
                 </div>
             </form>
             <div class="login-link">
-                <a href="login.html">¿Ya tienes una cuenta? Inicia sesión</a>
+                <a href="login.jsp">¿Ya tienes una cuenta? Inicia sesión</a>
             </div>
         </div>
     </body>

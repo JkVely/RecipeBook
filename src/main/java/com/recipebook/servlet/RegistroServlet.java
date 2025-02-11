@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import com.recipebook.logic.User;
 import com.recipebook.logic.UsersContainer;
+import com.recipebook.dao.UserDao;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -20,12 +21,14 @@ public class RegistroServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         HttpSession session = request.getSession();
-        UsersContainer usersContainer = (UsersContainer) session.getAttribute("usersContainer");
+        UserDao userDao = (UserDao) session.getAttribute("userDao");
+        System.out.println("UserDao: " + userDao);
+
 
         User newUser = new User(username, password);
-        usersContainer.addUser(newUser);
+        System.out.println("New User: " + newUser.getUsername());
 
-        session.setAttribute("usersContainer", usersContainer);
+        userDao.agregarUsuario(newUser);
 
         session.setAttribute("currentUser", newUser);
         response.sendRedirect("perfil.jsp");

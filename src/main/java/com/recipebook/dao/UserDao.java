@@ -128,4 +128,37 @@ public class UserDao {
 
         return null;
     }
+
+    /**
+     * Obtiene el ID de un usuario por su nombre.
+     * 
+     * @param username Nombre del usuario.
+     * @return ID del usuario o -1 si no se encuentra.
+     */
+    public int obtenerUserID(String username) {
+        String selectUserIDQuery = String.format(
+            "SELECT UserID FROM Users WHERE Name = '%s'", username
+        );
+
+        try {
+            ResultSet rs = sqlController.executeQuery(selectUserIDQuery);
+
+            if (rs.next()) {
+                return rs.getInt("UserID");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+
+    /**
+     * Obtiene el RecetaDAO asociado.
+     * 
+     * @return RecetaDAO.
+     */
+    public RecetaDAO getRecetaDAO() {
+        return recetaDAO;
+    }
 }

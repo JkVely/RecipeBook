@@ -10,6 +10,7 @@ import java.util.Map;
 import com.google.gson.Gson;
 import com.recipebook.dao.RecetaDAO;
 import com.recipebook.dao.SQLController;
+import com.recipebook.dao.UserDao;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
 import com.recipebook.logic.User;
@@ -91,7 +92,11 @@ public class RecetaServlet extends HttpServlet {
         User user = (User) session.getAttribute("currentUser");
         user.addReceta(receta);
         
-        session.setAttribute("currentUser", user);
+        UserDao userDao = (UserDao) session.getAttribute("userDao");
+        int id = userDao.obtenerUserID(user.getUsername());
+        RecetaDAO recetaDAO = userDao.getRecetaDAO();
+        recetaDAO.agregarReceta(receta, id);
+
         session.setAttribute("receta", receta);
         session.setAttribute("pasos", receta.getPasos());
         response.sendRedirect("./receta.jsp");
