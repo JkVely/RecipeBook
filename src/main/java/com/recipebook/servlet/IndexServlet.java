@@ -31,7 +31,7 @@ public class IndexServlet extends HttpServlet {
 
     private Connection connection;
     private boolean connected = false;
-    private String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;user";
+    private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true";
 
     private boolean start(String connectionUrl) {
         try {
