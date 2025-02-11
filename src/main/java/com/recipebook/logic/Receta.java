@@ -115,6 +115,10 @@ public class Receta {
         return this.tiempo;
     }
 
+    public void setTiempo(int tiempo){
+        this.tiempo = tiempo;
+    }
+
     public String getDuracion(){
         int minutos = (int) getTiempo() / 60;
         int segundos = getTiempo() - (minutos*60);
@@ -124,6 +128,10 @@ public class Receta {
 
     public double getValor(){
         return this.valor;
+    }
+
+    public void setValor(double valor){
+        this.valor = valor;
     }
 
     public void addValoracion(double valor){

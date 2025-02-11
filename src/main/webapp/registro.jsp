@@ -1,12 +1,13 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.recipebook.logic.User" %>
 <%@ page import="com.recipebook.logic.UsersContainer" %>
+<%@ page import="com.recipebook.dao.UserDao" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.stream.*" %>
 <%
-    UsersContainer usersContainer = (UsersContainer)(session.getAttribute("usersContainer"));
+    UsersContainer usersContainer = ((UserDao)session.getAttribute("userDao")).obtenerUsuarios();
     List<String> usernames = new ArrayList<>();
     String connection = (String) session.getAttribute("conexion");
     if(usersContainer != null){
@@ -33,7 +34,7 @@
                 <h1>Registro de usuario</h1>
             </header>
             <form id="receta-form" action="RegistroServlet" method="POST">
-                <h1>conectado a la DB: <%= connection %></h1>
+                <p>conectado a la DB: <%= connection %></p>
                 <div class="form-group">
                     <label for="username">Nombre de usuario:</label>
                     <input type="text" id="username" name="username" required onblur="verificarUsername()">

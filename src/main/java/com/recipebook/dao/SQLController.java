@@ -9,12 +9,16 @@ import java.sql.Statement;
 public class SQLController {
     private Connection connection;
     private boolean connected = false;
-    private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;username=PCPersonal/jkqui;";
+    private final String connectionUrl = "jdbc:sqlserver://PCPersonal:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;";
 
     public SQLController() {
         connected = start(this.connectionUrl);
     }
 
+    public SQLController(String connectionUrl) {
+        connected = start(connectionUrl);
+    }
+    
     private boolean start(String connectionUrl) {
         try {
             // Cargar el driver JDBC
@@ -23,11 +27,7 @@ public class SQLController {
             connection = DriverManager.getConnection(connectionUrl);
             System.out.println("Done.");
             return true;
-        } catch (ClassNotFoundException e) {
-            System.out.println("SQL Server JDBC Driver not found.");
-            e.printStackTrace();
-            return false;
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println();
             e.printStackTrace();
             return false;

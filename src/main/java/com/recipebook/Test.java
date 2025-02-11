@@ -7,7 +7,9 @@ import com.recipebook.logic.RecipeTypes;
 
 public class Test {
     public static void main(String[] args) {
-        SQLController sqlController = new SQLController();
+        String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=jkvely_Recipes;user=jkvely_Recipes;password=1029;trustServerCertificate=true";
+        SQLController sqlController = new SQLController(connectionUrl);
+
         if (sqlController.isConnected()) {
             System.out.println("Connected to the database.");
         } else {
@@ -15,6 +17,6 @@ public class Test {
             return;
         }
 
-        System.out.println("Receta added to the database.");
+        
     }
 }

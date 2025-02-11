@@ -2,8 +2,10 @@ package com.recipebook.servlet;
 
 import java.io.IOException;
 
+import com.recipebook.dao.SQLController;
+import com.recipebook.dao.UserDao;
+import com.recipebook.logic.User;
 import com.recipebook.logic.UsersContainer;
-import com.recipebook.dao.*;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -12,78 +14,12 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  *
  * @author jkqui
  */
 @WebServlet(name = "IndexServlet", urlPatterns = { "/IndexServlet" })
 public class IndexServlet extends HttpServlet {
-
-    private Connection connection;
-    private boolean connected = false;
-    private final String connectionUrl = "jdbc:sqlserver://localhost:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;username=PCPersonal/jkqui";
-
-    private boolean start(String connectionUrl) {
-        try {
-            // Cargar el driver JDBC
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            System.out.print("Connecting to SQL Server ... ");
-            connection = DriverManager.getConnection(connectionUrl);
-            System.out.println("Done.");
-            return true;
-        } catch (ClassNotFoundException e) {
-            System.out.println("SQL Server JDBC Driver not found.");
-            e.printStackTrace();
-            return false;
-        } catch (SQLException e) {
-            System.out.println();
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public boolean isConnected() {
-        try {
-            return connection != null && !connection.isClosed();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-    }
-
-    public ResultSet executeQuery(String query) throws SQLException {
-        if (isConnected()) {
-            Statement statement = connection.createStatement();
-            return statement.executeQuery(query);
-        } else {
-            throw new SQLException("Not connected to the database.");
-        }
-    }
-
-    public int executeUpdate(String query) throws SQLException {
-        if (isConnected()) {
-            Statement statement = connection.createStatement();
-            return statement.executeUpdate(query);
-        } else {
-            throw new SQLException("Not connected to the database.");
-        }
-    }
-
-    public void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -99,31 +35,19 @@ public class IndexServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();
-        if (session != null) {
-            session.invalidate(); // Invalidar la sesión actual
-        }
-        session = request.getSession(true); // Crear una nueva sesión
 
-        SQLController sqlController = new SQLController();
-        connected = sqlController.isConnected();
-        String conexion = connected ? "Conectado C - " : "Desconectado C - ";
+        String connectionUrl = "jdbc:sqlserver://sql.bsite.net\\MSSQL2016;databaseName=jkvely_Recipes;user=jkvely_Recipes;password=1029;trustServerCertificate=true";
+        SQLController sqlController = new SQLController(connectionUrl);
 
-        if (!connected) {
-            start(connectionUrl);
-            conexion += isConnected() ? "Conectado L" : "Desconectado L";
-        }
+        session.setAttribute("connectionUrl", connectionUrl);
 
+        boolean connected = sqlController.isConnected();
+        String conexion = connected ? "Conectado" : "Desconectado";
         session.setAttribute("conexion", conexion);
 
-        session.setAttribute("userContainer", null);
-        UsersContainer usersContainer = (UsersContainer) session.getAttribute("usersContainer");
-        if (usersContainer == null) {
-            usersContainer = new UsersContainer();
-        } else {
-            // [ ]: Agregar la recopilacion de la DB
-        }
+        UserDao userDao = new UserDao(sqlController);
+        session.setAttribute("userDao", userDao);
 
-        session.setAttribute("usersContainer", usersContainer);
         response.sendRedirect("registro.jsp");
     }
 
