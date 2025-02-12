@@ -43,8 +43,10 @@
                 </section>
 
                 <section class="cta-section">
-                    <a href="./explorar.html"
-                        class="cta-button explore">Explorar Recetas</a>
+                    
+                    <form action="ExplorarServlet" method="post">
+                        <button type="submit" class="cta-button upload">Explorar Recetas</button>
+                    </form>
                     <form action="IndexServlet" method="post">
                         <button type="submit" class="cta-button upload">Compartir tu Receta</button>
                     </form>

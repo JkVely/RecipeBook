@@ -19,7 +19,9 @@
     <div class="container">
         <div class="header">
             <h1 id="nombreReceta">${receta.getNombre()}</h1>
-            <h1 id="perfil"><a href="perfil.jsp">Perfil</a></h1>
+            <% if (session.getAttribute("currentUser") != null) { %>
+                <h1 id="perfil"><a href="perfil.jsp">Perfil</a></h1>
+            <% } %>
         </div>
 
         <img src="${receta.getImagen()}" alt="Imagen de la receta" class="receta-imagen"/>
@@ -39,7 +41,7 @@
         </div>
         
         <div class="botones">
-            <button type="button" onclick="window.location.href='../explorar.html';">Volver a Explorar</button>
+            <button type="button" onclick="window.location.href='./explorar.html';">Volver a Explorar</button>
             <button type="button" onclick="mostrarValoracion();">Agregar Valoración</button>
         </div>
         
