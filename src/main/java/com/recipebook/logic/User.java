@@ -1,9 +1,6 @@
 package com.recipebook.logic;
 
-import java.io.Serializable;
-
-public class User implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class User {
     private String username;
     private String password;
     private RecetasContainer recetas;

@@ -1,11 +1,9 @@
 package com.recipebook.logic;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UsersContainer implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class UsersContainer {
     private final List<User> users;
 
     public UsersContainer(){

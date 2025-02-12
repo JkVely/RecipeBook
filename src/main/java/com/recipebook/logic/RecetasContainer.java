@@ -1,15 +1,18 @@
 package com.recipebook.logic;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecetasContainer implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class RecetasContainer {
     private final List<Receta> recetas;
 
     public RecetasContainer(){
         recetas = new ArrayList<>();
+    }
+
+    public void setRecetas(List<Receta> recetas){
+        this.recetas.clear();
+        this.recetas.addAll(recetas);
     }
 
     public void addReceta(Receta receta){

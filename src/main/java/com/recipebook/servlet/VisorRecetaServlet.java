@@ -5,6 +5,7 @@
 package com.recipebook.servlet;
 
 import java.io.IOException;
+import java.util.List;
 
 import com.recipebook.logic.*;
 
@@ -41,7 +42,8 @@ public class VisorRecetaServlet extends HttpServlet {
                 int id = Integer.parseInt(recetaId);
                 
                 // Get the recetas container from session
-                RecetasContainer container = (RecetasContainer) request.getSession().getAttribute("listRecetas");
+                List<Receta> rContainer =  (List<Receta>)request.getSession().getAttribute("listRecetas");
+                RecetasContainer container = new RecetasContainer(rContainer);
                 
                 // Get the specific receta
                 Receta receta = container.selectReceta(id);

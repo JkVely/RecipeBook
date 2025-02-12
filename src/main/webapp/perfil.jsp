@@ -52,7 +52,7 @@
                 <h2>Mis Recetas</h2>
                 <div class="recipe-grid">
                     <% if (userRecetas != null && !userRecetas.isEmpty()) {
-                        sesion.setAttribute("listRecetas", userRecetas);
+                        session.setAttribute("listRecetas", userRecetas);
                         for (Receta receta : userRecetas) { 
                             String iconoTipo = typeIcons.getOrDefault(receta.getTipo(), "🍽️");
                             int id = userRecetas.indexOf(receta);

@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.recipebook.logic.Receta" %>
-<%@ page import="com.recipebook.logic.Paso" %>
+<%@ page import="com.recipebook.logic.steps.Paso" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
 <%
