@@ -42,8 +42,10 @@ public class VisorRecetaServlet extends HttpServlet {
                 int id = Integer.parseInt(recetaId);
                 
                 // Get the recetas container from session
-                List<Receta> rContainer =  (List<Receta>)request.getSession().getAttribute("listRecetas");
-                RecetasContainer container = new RecetasContainer(rContainer);
+                @SuppressWarnings("unchecked")
+                List<Receta> rContainer =  (List<Receta>) request.getSession().getAttribute("listRecetas");
+                RecetasContainer container = new RecetasContainer();
+                container.setRecetas(rContainer);
                 
                 // Get the specific receta
                 Receta receta = container.selectReceta(id);
