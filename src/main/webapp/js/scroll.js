@@ -1,6 +1,7 @@
 let recetas = '';
 let pagina = 1;
 let ultimaReceta;
+let categoriaSeleccionada = '';
 
 let observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(entry => {
@@ -14,9 +15,18 @@ let observer = new IntersectionObserver((entries, observer) => {
     threshold: 1.0
 });
 
+function seleccionarCategoria(categoria) {
+    categoriaSeleccionada = categoria;
+    pagina = 1;
+    recetas = '';
+    document.getElementById('contenedor').innerHTML = '';
+    cargarRecetas();
+}
+
 const cargarRecetas = async () => {
+    if (!categoriaSeleccionada) return;
     try {
-        const respuesta = await fetch(`/RecipeBook/RecetasServlet?page=${pagina}`);
+        const respuesta = await fetch(`/RecipeBook/RecetasServlet?categoria=${categoriaSeleccionada}&page=${pagina}`);
 
         if (respuesta.status === 200) {
             const datos = await respuesta.json();
@@ -48,5 +58,3 @@ const cargarRecetas = async () => {
         console.log(error);
     }
 };
-
-cargarRecetas();
