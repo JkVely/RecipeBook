@@ -1,9 +1,6 @@
 package com.recipebook;
 
-import com.recipebook.dao.RecetaDao;
 import com.recipebook.dao.SQLController;
-import com.recipebook.logic.Receta;
-import com.recipebook.logic.RecipeTypes;
 
 public class Test {
     public static void main(String[] args) {
@@ -16,7 +13,5 @@ public class Test {
             System.out.println("Failed to connect to the database.");
             return;
         }
-
-
     }
 }
