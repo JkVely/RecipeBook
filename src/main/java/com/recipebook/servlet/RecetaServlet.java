@@ -25,7 +25,7 @@ import jakarta.servlet.http.HttpSession;
  * @author David
  * 
  * @version 1.0
- * @since 2023-10-01
+ * @since 2024-10-01
  */
 @WebServlet(name = "RecetaServlet", urlPatterns = { "/RecetaServlet" })
 public class RecetaServlet extends HttpServlet {
@@ -40,6 +40,7 @@ public class RecetaServlet extends HttpServlet {
      * @throws IOException      if an I/O error occurs
      * @throws SQLException 
      */
+    @SuppressWarnings("unchecked")
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String nombre = request.getParameter("nombre");

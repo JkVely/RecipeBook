@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class SQLController {
     private Connection connection;
-    private boolean connected = false;
+    private final boolean connected;
     private final String connectionUrl = "jdbc:sqlserver://PCPersonal:1433;databaseName=RECIPE_BOOK;integratedSecurity=true;encrypt=false;trustServerCertificate=true;";
 
     public SQLController() {
@@ -69,5 +70,9 @@ public class SQLController {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public boolean getConnected() {
+        return connected;
     }
 }

@@ -8,6 +8,7 @@ import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecetasContainer;
 import com.recipebook.logic.RecipeTypes;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class RecetaDao {
     private final SQLController sqlController;
 

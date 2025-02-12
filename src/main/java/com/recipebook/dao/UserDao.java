@@ -7,6 +7,7 @@ import com.recipebook.logic.Receta;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+@SuppressWarnings("CallToPrintStackTrace")
 public class UserDao {
     private final SQLController sqlController;
     private final RecetaDao recetaDAO;
