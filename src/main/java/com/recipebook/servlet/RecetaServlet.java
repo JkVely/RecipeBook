@@ -72,7 +72,7 @@ public class RecetaServlet extends HttpServlet {
             String ingredientesPasoJson = new Gson().toJson(p.get("ingredientes"));
             String ingredientesPasoStr = new Gson().fromJson(ingredientesPasoJson, String.class);
             String[] ingredientesPaso = ingredientesPasoStr.split(",");
-            if (utensiliosPasoStr.equals("") && ingredientesPasoStr.equals("")) {
+            if (utensiliosPasoStr.isBlank() && ingredientesPasoStr.isBlank()) {
                 receta.addStep(descripcionPaso, tiempo, imagenPaso);
             } else {
                 receta.addStep(descripcionPaso, tiempo, utensiliosPaso, ingredientesPaso, imagenPaso);

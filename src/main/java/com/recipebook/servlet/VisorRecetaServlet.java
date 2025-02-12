@@ -55,7 +55,7 @@ public class VisorRecetaServlet extends HttpServlet {
                 request.getSession().setAttribute("pasos", receta.getPasos());
                 
                 // Forward to receta.jsp
-                request.getRequestDispatcher("receta.jsp").forward(request, response);
+                response.sendRedirect("./receta.jsp");
                 
             } catch (NumberFormatException e) {
                 System.out.println("Error: " + e.getMessage());

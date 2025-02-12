@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.recipebook.logic.Receta" %>
-<%@ page import="com.recipebook.logic.steps.Paso" %>
+<%@ page import="com.recipebook.logic.steps.*" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
 <%
@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Receta de ${receta.getNombre()}</title>
-    <link rel="stylesheet" href="../css/receta.css">
+    <link rel="stylesheet" href="./css/receta.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <body>
@@ -77,18 +77,20 @@
                 <li class="paso">
                     <p><strong>Descripción:</strong> <%= paso.getDescripcion() %></p>
                     <p><strong>Tiempo:</strong> <%= paso.getTiempo() %> minutos</p>
-                    <p><strong>Utensilios:</strong></p>
-                    <ul>
-                        <% for (String utensilio : paso.getUtensilios()) { %>
-                            <li><%= utensilio %></li>
-                        <% } %>
-                    </ul>
-                    <p><strong>Ingredientes:</strong></p>
-                    <ul>
-                        <% for (String ingrediente : paso.getIngredientes()) { %>
-                            <li><%= ingrediente %></li>
-                        <% } %>
-                    </ul>
+                    <% if (paso instanceof PasoWextras pasoExtra) { %>
+                        <p><strong>Utensilios:</strong></p>
+                        <ul>
+                            <% for (String utensilio : pasoExtra.getUtensilios()) { %>
+                                <li><%= utensilio %></li>
+                            <% } %>
+                        </ul>
+                        <p><strong>Ingredientes:</strong></p>
+                        <ul>
+                            <% for (String ingrediente : pasoExtra.getIngredientes()) { %>
+                                <li><%= ingrediente %></li>
+                            <% } %>
+                        </ul>
+                    <% } %>
                     <% if (paso.getImagen() != null) { %>
                         <img src="<%= paso.getImagen() %>" alt="Imagen del paso" class="paso-imagen"/>
                     <% } %>
