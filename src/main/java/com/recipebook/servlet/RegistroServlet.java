@@ -3,7 +3,6 @@ package com.recipebook.servlet;
 import java.io.IOException;
 
 import com.recipebook.logic.User;
-import com.recipebook.logic.UsersContainer;
 import com.recipebook.dao.UserDao;
 
 import jakarta.servlet.ServletException;

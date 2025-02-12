@@ -4,8 +4,6 @@ import java.io.IOException;
 
 import com.recipebook.dao.SQLController;
 import com.recipebook.dao.UserDao;
-import com.recipebook.logic.User;
-import com.recipebook.logic.UsersContainer;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
