@@ -42,12 +42,14 @@
 
                     datos.forEach(receta => {
                         recetasHTML += `
-                            <div class="receta">
-                                <h2>${receta.nombre}</h2>
-                                <p><strong>Tipo:</strong> ${receta.tipo}</p>
-                                <p><strong>Descripción:</strong> ${receta.descripcion}</p>
-                                <p><strong>Tiempo:</strong> ${receta.tiempo} minutos</p>
-                            </div>
+                            <a href="VisorRecetaServlet?id=<%= id %>" class="recipe-card">
+                                <div class="recipe-image" style="background-image: url('<%= receta.getImagen() %>'); background-color: #f5f5f5;" data-icon="<%= iconoTipo %>" onerror="this.innerHTML='<%= iconoTipo %>'; this.style.fontSize='48px'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center';"></div>
+                                <div class="recipe-info">
+                                    <h3><%= receta.getNombre() %></h3>
+                                    <p><%= receta.getDescripcion() %></p>
+                                    <span class="recipe-type"><%= receta.getTipo() %></span>
+                                </div>
+                            </a>
                         `;
                     });
                     
