@@ -1,10 +1,29 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="com.recipebook.logic.User" %>
 <%@ page import="com.recipebook.logic.Receta" %>
+<%@ page import="com.recipebook.logic.RecetasContainer" %>
+<%@ page import="com.recipebook.dao.UserDao" %>
+<%@ page import="com.recipebook.dao.RecetaDao" %>
+<%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ page import="java.util.List" %>
+<%@ page import="java.util.Map" %>
+<%@ page import="java.util.HashMap" %>
 <%
     User currentUser = (User) session.getAttribute("currentUser");
-    List<Receta> userRecetas = (List<Receta>) request.getAttribute("userRecetas");
+    UserDao userDao = (UserDao) session.getAttribute("userDao");
+    RecetaDao recetaDao = userDao.getRecetaDAO();
+    RecetasContainer recetaContainer = recetaDao.obtenerRecetasPorUsuario(userDao.obtenerUserID(currentUser.getUsername()));
+    List<Receta> userRecetas = recetaContainer.getRecetas();   
+
+    Map<String, String> typeIcons = new HashMap<>();
+    typeIcons.put("DESAYUNO", "🍳");
+    typeIcons.put("ALMUERZO", "🍝");
+    typeIcons.put("CENA", "🍽️");
+    typeIcons.put("POSTRE", "🍰");
+    typeIcons.put("SNACK", "🥨");
+    typeIcons.put("BEBIDA", "🍹");
+    typeIcons.put("ENSALADA", "🥗");
+    typeIcons.put("GUARNICION", "🥔");
 %>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,9 +52,11 @@
                 <h2>Mis Recetas</h2>
                 <div class="recipe-grid">
                     <% if (userRecetas != null && !userRecetas.isEmpty()) {
-                        for (Receta receta : userRecetas) { %>
+                        for (Receta receta : userRecetas) { 
+                            String iconoTipo = typeIcons.getOrDefault(receta.getTipo(), "🍽️");
+                    %>
                             <div class="recipe-card">
-                                <img src="<%= receta.getImagen() %>" alt="<%= receta.getNombre() %>" class="recipe-image">
+                                <div class="recipe-image" style="background-image: url('<%= receta.getImagen() %>'); background-color: #f5f5f5;" data-icon="<%= iconoTipo %>" onerror="this.innerHTML='<%= iconoTipo %>'; this.style.fontSize='48px'; this.style.display='flex'; this.style.alignItems='center'; this.style.justifyContent='center';"></div>
                                 <div class="recipe-info">
                                     <h3><%= receta.getNombre() %></h3>
                                     <p><%= receta.getDescripcion() %></p>
@@ -53,7 +74,7 @@
             </div>
         </main>
         <footer>
-            <p>&copy; 2023 Global Recipe Book. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Global Recipe Book. Todos los derechos reservados.</p>
         </footer>
     </div>
 </body>

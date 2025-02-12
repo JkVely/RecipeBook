@@ -2,19 +2,16 @@ package com.recipebook.dao;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
-import com.recipebook.logic.steps.Paso;
-import com.recipebook.logic.steps.PasoSimple;
+import com.recipebook.logic.steps.*;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecetasContainer;
 import com.recipebook.logic.RecipeTypes;
 
-public class RecetaDAO {
+public class RecetaDao {
     private final SQLController sqlController;
 
-    public RecetaDAO(SQLController sqlController) {
+    public RecetaDao(SQLController sqlController) {
         this.sqlController = sqlController;
     }
 
@@ -37,28 +34,58 @@ public class RecetaDAO {
             rs.next();
             int recetaID = rs.getInt("RecetaID");
 
+            // Insert steps and get their IDs
             for (Paso paso : receta.getPasos()) {
-                String insertPasoQuery = String.format(
-                    "INSERT INTO Pasos (RecetaID, Descripcion, Tiempo, Imagen) VALUES (%d, '%s', %d, '%s')",
-                    recetaID, paso.getDescripcion(), paso.getTiempo(), paso.getImagen()
-                );
-                sqlController.executeUpdate(insertPasoQuery);
-            }
+            String insertPasoQuery = String.format(
+                "INSERT INTO Pasos (RecetaID, Descripcion, Tiempo, Imagen) VALUES (%d, '%s', %d, '%s')",
+                recetaID, paso.getDescripcion(), paso.getTiempo(), paso.getImagen()
+            );
+            sqlController.executeUpdate(insertPasoQuery);
+            
+            // Get the PasoID
+            ResultSet rsPaso = sqlController.executeQuery("SELECT SCOPE_IDENTITY() AS PasoID");
+            rsPaso.next();
+            int pasoID = rsPaso.getInt("PasoID");
 
-            for (String utensilio : receta.getUtensilios()) {
+            // If the step has extras (is PasoWextras)
+            if (paso instanceof PasoWextras pasoWextras) {
+                
+                // Insert utensilios for this step
+                for (String utensilio : pasoWextras.getUtensilios()) {
                 String insertUtensilioQuery = String.format(
-                    "INSERT INTO Utensilios (RecetaID, Nombre) VALUES (%d, '%s')",
-                    recetaID, utensilio
+                    "INSERT INTO Utensilios (RecetaID, PasoID, Nombre) VALUES (%d, %d, '%s')",
+                    recetaID, pasoID, utensilio
                 );
                 sqlController.executeUpdate(insertUtensilioQuery);
-            }
+                }
 
-            for (String ingrediente : receta.getIngredientes()) {
+                // Insert ingredientes for this step
+                for (String ingrediente : pasoWextras.getIngredientes()) {
                 String insertIngredienteQuery = String.format(
-                    "INSERT INTO Ingredientes (RecetaID, Nombre) VALUES (%d, '%s')",
-                    recetaID, ingrediente
+                    "INSERT INTO Ingredientes (RecetaID, PasoID, Nombre) VALUES (%d, %d, '%s')",
+                    recetaID, pasoID, ingrediente
                 );
                 sqlController.executeUpdate(insertIngredienteQuery);
+                }
+            }
+            }
+
+            // Insert general utensilios (not associated with specific steps)
+            for (String utensilio : receta.getUtensilios()) {
+            String insertUtensilioQuery = String.format(
+                "INSERT INTO Utensilios (RecetaID, PasoID, Nombre) VALUES (%d, NULL, '%s')",
+                recetaID, utensilio
+            );
+            sqlController.executeUpdate(insertUtensilioQuery);
+            }
+
+            // Insert general ingredientes (not associated with specific steps)
+            for (String ingrediente : receta.getIngredientes()) {
+            String insertIngredienteQuery = String.format(
+                "INSERT INTO Ingredientes (RecetaID, PasoID, Nombre) VALUES (%d, NULL, '%s')",
+                recetaID, ingrediente
+            );
+            sqlController.executeUpdate(insertIngredienteQuery);
             }
 
             return true;

@@ -1,6 +1,6 @@
 package com.recipebook;
 
-import com.recipebook.dao.RecetaDAO;
+import com.recipebook.dao.RecetaDao;
 import com.recipebook.dao.SQLController;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
@@ -17,6 +17,6 @@ public class Test {
             return;
         }
 
-        
+
     }
 }

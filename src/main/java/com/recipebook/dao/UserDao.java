@@ -9,11 +9,11 @@ import java.sql.SQLException;
 
 public class UserDao {
     private final SQLController sqlController;
-    private final RecetaDAO recetaDAO;
+    private final RecetaDao recetaDAO;
 
     public UserDao(SQLController sqlController) {
         this.sqlController = sqlController;
-        this.recetaDAO = new RecetaDAO(sqlController);
+        this.recetaDAO = new RecetaDao(sqlController);
     }
 
     /**
@@ -158,7 +158,7 @@ public class UserDao {
      * 
      * @return RecetaDAO.
      */
-    public RecetaDAO getRecetaDAO() {
+    public RecetaDao getRecetaDAO() {
         return recetaDAO;
     }
 }

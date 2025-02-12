@@ -1,15 +1,11 @@
 package com.recipebook.servlet;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.Map;
 
 import com.google.gson.Gson;
-import com.recipebook.dao.RecetaDAO;
-import com.recipebook.dao.SQLController;
+import com.recipebook.dao.RecetaDao;
 import com.recipebook.dao.UserDao;
 import com.recipebook.logic.Receta;
 import com.recipebook.logic.RecipeTypes;
@@ -21,7 +17,6 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.servlet.http.Part;
 
 /**
  * 
@@ -76,7 +71,11 @@ public class RecetaServlet extends HttpServlet {
             String ingredientesPasoJson = new Gson().toJson(p.get("ingredientes"));
             String ingredientesPasoStr = new Gson().fromJson(ingredientesPasoJson, String.class);
             String[] ingredientesPaso = ingredientesPasoStr.split(",");
-            receta.addStep(descripcionPaso, tiempo, utensiliosPaso, ingredientesPaso, imagenPaso);
+            if (utensiliosPasoStr.equals("") && ingredientesPasoStr.equals("")) {
+                receta.addStep(descripcionPaso, tiempo, imagenPaso);
+            } else {
+                receta.addStep(descripcionPaso, tiempo, utensiliosPaso, ingredientesPaso, imagenPaso);
+            }
         }
 
         for (String ingrediente : ingredientes) {
@@ -90,11 +89,13 @@ public class RecetaServlet extends HttpServlet {
 
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("currentUser");
+
         user.addReceta(receta);
         
         UserDao userDao = (UserDao) session.getAttribute("userDao");
         int id = userDao.obtenerUserID(user.getUsername());
-        RecetaDAO recetaDAO = userDao.getRecetaDAO();
+
+        RecetaDao recetaDAO = userDao.getRecetaDAO();
         recetaDAO.agregarReceta(receta, id);
 
         session.setAttribute("receta", receta);
